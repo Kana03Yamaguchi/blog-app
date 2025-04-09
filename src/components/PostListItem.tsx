@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { PostType } from "../Types/PostType";
+import styles from "./PostListItem.module.css";
 
 /**
  * props定義
@@ -14,7 +15,13 @@ interface PostListItemProps {
  */
 function PostListItem(props: PostListItemProps) {
   // 対象の記事詳細ページに遷移
-  return <Link to={"/posts/" + props.post.id}>{props.post.title}</Link>;
+  return (
+    <li>
+      <Link className={styles.link} to={"/posts/" + props.post.id}>
+        {props.post.title}
+      </Link>
+    </li>
+  );
 }
 
 export default PostListItem;

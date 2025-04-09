@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
+import styles from "./App.module.css";
 
 /**
  * Appコンポーネント
@@ -9,9 +9,9 @@ import PostDetailPage from "./pages/PostDetailPage";
  */
 function App() {
   return (
-    <div>
+    <div className={styles.container}>
       {/* ヘッダーエリア */}
-      <header>
+      <header className={styles.header}>
         <h1>ブログアプリ</h1>
       </header>
 
@@ -24,7 +24,7 @@ function App() {
       </main>
 
       {/* フッターエリア */}
-      <footer>
+      <footer className={styles.footer}>
         <p>&copy; 2025 KanaYamaguchi</p>
       </footer>
     </div>

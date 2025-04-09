@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { PostType } from "../Types/PostType";
 import { useEffect, useState } from "react";
 import { getPostDetailApi } from "../ApiAdapter/GetPostDetail";
+import styles from "./PostDetailPage.module.css";
 
 /**
  * PostDetailPageコンポーネント
@@ -31,11 +32,13 @@ function PostDetailPage() {
   }, [urlParams.id]);
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* ページタイトルエリア */}
-      <h2>{postDetail?.title ?? "記事詳細ページ"}</h2>
+      <h2 className={styles.title}>{postDetail?.title ?? "記事詳細ページ"}</h2>
       {/* 記事内容エリア */}
-      <p>{postDetail?.body ?? "選択された記事の内容が表示"}</p>
+      <p className={styles.body}>
+        {postDetail?.body ?? "選択された記事の内容が表示"}
+      </p>
     </div>
   );
 }

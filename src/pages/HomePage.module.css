@@ -1,0 +1,18 @@
+/* コンテナ全体 */
+.container {
+  padding: 20px;
+  background-color: #fefefe;
+}
+
+/* タイトル */
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+/* 記事一覧 */
+.list {
+  list-style: none;
+  padding: 0;
+}

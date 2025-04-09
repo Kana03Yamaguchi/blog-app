@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { PostType } from "../Types/PostType";
 import { getPostsListApi } from "../ApiAdapter/GetPostList";
 import PostListItem from "../components/PostListItem";
+import styles from "./HomePage.module.css";
 
 /**
  * HomePageコンポーネント
@@ -41,12 +42,12 @@ function HomePage() {
   });
 
   return (
-    <div>
+    <div className={styles.container}>
       {/* ページタイトルエリア */}
-      <h2>ホームページ</h2>
+      <h2 className={styles.title}>ホームページ</h2>
 
       {/* 記事一覧エリア */}
-      <ul>{postsList}</ul>
+      <ul className={styles.list}>{postsList}</ul>
     </div>
   );
 }
