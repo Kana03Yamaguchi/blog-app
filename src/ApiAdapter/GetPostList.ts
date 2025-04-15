@@ -13,8 +13,7 @@ export const getPostsListApi = async (): Promise<PostType[]> => {
     );
     // 成功時は取得データを返却
     return response.data;
-  } catch (error) {
-    console.error("API呼び出しエラー:", error);
+  } catch {
     // 失敗時は空配列を返却
     return [];
   }

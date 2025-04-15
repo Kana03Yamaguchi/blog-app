@@ -16,9 +16,8 @@ export const getPostDetailApi = async (
     );
     // 成功時は取得データを返却
     return response.data;
-  } catch (error) {
-    console.error("API呼び出しエラー:", error);
-    // 失敗時はnullを返却
+  } catch {
+    // 失敗時は null を返却
     return null;
   }
 };

@@ -1,6 +1,6 @@
 /**
  * 型定義：PostType
- * - API から取得する記事データの構造を定義
+ * - APIから取得する記事データの型定義
  */
 export interface PostType {
   userId: number; // 投稿ユーザーのID

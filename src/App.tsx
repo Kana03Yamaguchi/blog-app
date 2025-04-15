@@ -12,11 +12,11 @@ function App() {
     <div className={styles.container}>
       {/* ヘッダーエリア */}
       <header className={styles.header}>
-        <h1>ブログアプリ</h1>
+        <h1>Blog</h1>
       </header>
 
       {/* メインコンテンツエリア：ページごとの表示切り替え */}
-      <main>
+      <main className={styles.main}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
