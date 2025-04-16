@@ -1,0 +1,14 @@
+/* ページネーション全体の配置 */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  padding: 0;
+}
+
+/* ページネーションの各リスト */
+.pagination li {
+  list-style: none;
+}

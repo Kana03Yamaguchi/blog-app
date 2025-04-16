@@ -83,7 +83,7 @@ function HomePage() {
   return (
     <div className={appStyles.container}>
       {/* ページタイトルエリア */}
-      <h2 className={styles.title}>ホームページ</h2>
+      <h2 className={styles.title}>記事一覧</h2>
 
       {/* エラー表示エリア */}
       {errorMsg && <p>{errorMsg}</p>}

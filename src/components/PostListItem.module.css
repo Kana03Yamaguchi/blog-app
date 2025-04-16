@@ -1,14 +1,21 @@
 /* 記事リンク */
 .link {
-  text-decoration: none;
-  color: #333;
   display: block;
   width: 100%;
-  padding: 8px;
+  padding: 12px 16px;
+  margin-bottom: 12px;
   box-sizing: border-box;
+  color: #007acc;
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  text-decoration: none;
+  transition: background-color 0.2s;
 }
 
 .link:hover {
+  background-color: #f0f8ff;
   text-decoration: underline;
-  background-color: #f7f7f7;
 }

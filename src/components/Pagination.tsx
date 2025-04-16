@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import styles from "./Pagination.module.css";
 
 /**
  * props定義
@@ -77,7 +78,7 @@ function Pagination(props: PaginationProps) {
 
   return (
     <nav>
-      <ul>
+      <ul className={styles.pagination}>
         {/* 「前へ」ボタン：1ページ目以外のときに表示 */}
         {props.currentPage > 1 && (
           <li>

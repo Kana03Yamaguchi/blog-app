@@ -75,7 +75,7 @@ function PostDetailPage() {
   });
 
   return (
-    <div className={styles.container}>
+    <div className={styles.postBox}>
       {/* ページタイトルエリア */}
       <h2 className={styles.title}>{postDetail?.title ?? "記事詳細ページ"}</h2>
 
@@ -93,10 +93,14 @@ function PostDetailPage() {
           </p>
           {/* コメント一覧エリア */}
           <h3>コメント一覧</h3>
-          <ul>{commentList}</ul>
+          <div className={styles.commentBox}>
+            <ul>{commentList}</ul>
+          </div>
 
           {/* 記事一覧ページに戻るボタン */}
-          <button onClick={handleBackClick}>一覧に戻る</button>
+          <div className={styles.backButton}>
+            <button onClick={handleBackClick}>一覧に戻る</button>
+          </div>
         </>
       )}
     </div>
