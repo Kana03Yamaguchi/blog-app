@@ -12,7 +12,8 @@ export const getPostDetailApi = async (
 ): Promise<PostType | null> => {
   try {
     const response = await axios.get<PostType>(
-      "https://jsonplaceholder.typicode.com/posts/" + id
+      // APIサーバーのURL
+      "/api/posts/" + id
     );
     // 成功時は取得データを返却
     return response.data;

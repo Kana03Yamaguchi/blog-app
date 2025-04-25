@@ -2,6 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import PostDetailPage from "./pages/PostDetailPage";
 import styles from "./App.module.css";
+import NewPostPage from "./pages/NewPostPage";
+import EditPostPage from "./pages/EditPostPage";
 
 /**
  * Appコンポーネント
@@ -20,6 +22,8 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/posts/:id" element={<PostDetailPage />} />
+          <Route path="/posts/new" element={<NewPostPage />} />
+          <Route path="/posts/:id/edit" element={<EditPostPage />} />
         </Routes>
       </main>
 

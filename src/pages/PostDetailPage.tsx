@@ -89,7 +89,7 @@ function PostDetailPage() {
         <>
           {/* 記事内容エリア */}
           <p className={styles.body}>
-            {postDetail?.body ?? "選択された記事の内容が表示"}
+            {postDetail?.content ?? "選択された記事の内容が表示"}
           </p>
           {/* コメント一覧エリア */}
           <h3>コメント一覧</h3>

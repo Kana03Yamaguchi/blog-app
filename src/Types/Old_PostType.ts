@@ -3,9 +3,8 @@
  * - APIから取得する記事データの型定義
  */
 export interface PostType {
+  userId: number; // 投稿ユーザーのID
   id: number; // 記事ID
   title: string; // 記事のタイトル
-  content: string; // 記事の本文
-  createdAt: string; // 作成日時
-  updatedAt: string; // 更新日時
+  body: string; // 記事の本文
 }

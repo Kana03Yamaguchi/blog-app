@@ -9,7 +9,8 @@ import { PostType } from "../Types/PostType";
 export const getPostsListApi = async (): Promise<PostType[]> => {
   try {
     const response = await axios.get<PostType[]>(
-      "https://jsonplaceholder.typicode.com/posts"
+      // APIサーバーのURL
+      "/api/posts"
     );
     // 成功時は取得データを返却
     return response.data;

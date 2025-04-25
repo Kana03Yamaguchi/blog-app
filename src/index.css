@@ -1,8 +1,8 @@
 /* フォント・文字色・余白 */
 body {
-  background-color: #ffffff; /* 背景は白 */
+  background-color: #ffffff;
   font-family: "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, sans-serif;
-  color: #222; /* やや濃いグレーで読みやすく */
+  color: #222;
   line-height: 1.7;
   font-size: 16px;
   margin: 0;

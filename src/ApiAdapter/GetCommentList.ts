@@ -12,7 +12,8 @@ export const getCommentListApi = async (
 ): Promise<CommentType[]> => {
   try {
     const response = await axios.get<CommentType[]>(
-      "https://jsonplaceholder.typicode.com/posts/" + postId + "/comments"
+      // APIサーバーのURL
+      "/api/posts/" + postId + "/comments"
     );
     // 成功時は取得データを返却
     return response.data;
