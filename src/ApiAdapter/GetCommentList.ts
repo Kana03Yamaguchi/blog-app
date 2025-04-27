@@ -13,7 +13,7 @@ export const getCommentListApi = async (
   try {
     const response = await axios.get<CommentType[]>(
       // APIサーバーのURL
-      "/api/posts/" + postId + "/comments"
+      import.meta.env.VITE_API_URL + "/api/posts/" + postId + "/comments"
     );
     // 成功時は取得データを返却
     return response.data;

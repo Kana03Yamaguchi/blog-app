@@ -13,7 +13,7 @@ export const getPostDetailApi = async (
   try {
     const response = await axios.get<PostType>(
       // APIサーバーのURL
-      "/api/posts/" + id
+      import.meta.env.VITE_API_URL + "/api/posts/" + id
     );
     // 成功時は取得データを返却
     return response.data;

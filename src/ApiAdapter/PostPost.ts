@@ -11,7 +11,10 @@ export const postPostApi = async (
   content: string
 ): Promise<boolean> => {
   try {
-    await axios.post("/api/posts", { title, content });
+    await axios.post(import.meta.env.VITE_API_URL + "/api/posts", {
+      title,
+      content,
+    });
     return true;
   } catch (error) {
     console.error("記事作成に失敗しました", error);
