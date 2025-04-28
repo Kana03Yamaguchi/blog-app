@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { PostType } from "../Types/PostType";
 import { getPostsListApi } from "../ApiAdapter/GetPostList";
-import PostListItem from "../components/PostListItem";
 import styles from "./HomePage.module.css";
 import appStyles from "../App.module.css";
 import Pagination from "../components/Pagination";
+import { Link } from "react-router-dom";
+import PostList from "../components/PostList";
+import { motion } from "framer-motion";
 
 /**
  * HomePageコンポーネント
@@ -62,13 +64,6 @@ function HomePage() {
   };
 
   /**
-   * 記事一覧表示処理
-   */
-  const postsList = pagePosts.map((post) => {
-    return <PostListItem key={post.id} post={post} />;
-  });
-
-  /**
    * 初期表示処理
    */
   useEffect(() => {
@@ -81,20 +76,34 @@ function HomePage() {
   }, [currentPage]);
 
   return (
-    <div className={appStyles.container}>
+    <motion.div
+      className={appStyles.container}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {/* ページタイトルエリア */}
       <h2 className={styles.title}>記事一覧</h2>
 
       {/* エラー表示エリア */}
-      {errorMsg && <p>{errorMsg}</p>}
+      {errorMsg && <p className={styles.errorMessage}>{errorMsg}</p>}
 
       {/* ローディング中表示 */}
       {isLoading ? (
-        <p>ローディング中...</p>
+        <p className={styles.loadingMessage}>ローディング中...</p>
       ) : (
         <>
+          {/* 記事作成ボタン */}
+          <div className={styles.createButtonArea}>
+            <Link to="/posts/new">
+              <button className={styles.createButton}>＋ 新しく投稿する</button>
+            </Link>
+          </div>
+
           {/* 記事一覧エリア */}
-          <ul className={styles.list}>{postsList}</ul>
+          <PostList posts={pagePosts} />
+
           {/* ページネーション */}
           <Pagination
             totalPosts={posts.length}
@@ -104,7 +113,7 @@ function HomePage() {
           />
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
 

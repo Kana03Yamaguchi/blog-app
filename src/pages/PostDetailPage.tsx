@@ -5,6 +5,7 @@ import { getPostDetailApi } from "../ApiAdapter/GetPostDetail";
 import styles from "./PostDetailPage.module.css";
 import { CommentType } from "../Types/CommentType";
 import { getCommentListApi } from "../ApiAdapter/GetCommentList";
+import { deletePostApi } from "../ApiAdapter/DeletePost";
 
 /**
  * PostDetailPageコンポーネント
@@ -21,12 +22,30 @@ function PostDetailPage() {
   const [comments, setComments] = useState<CommentType[]>([]);
   // URLパラメータを取得
   const urlParams = useParams<{ id: string }>();
+  // URLパラメータID
+  const postId = Number(urlParams.id);
   // 記事一覧遷移用の関数を取得
   const navigate = useNavigate();
 
   /**
    * メモ化
    */
+  // 記事を削除してに記事一覧画面に戻る関数
+  const handleDeleteClick = useCallback(async () => {
+    const result = window.confirm("この記事を本当に削除してもよいですか？");
+
+    if (result) {
+      // 記事削除APIを呼び出し
+      const success = await deletePostApi(postId);
+      if (success) {
+        // 成功：記事一覧ページ（トップ）へ遷移
+        navigate("/");
+      } else {
+        // 失敗：アラート表示
+        alert("記事の削除に失敗しました");
+      }
+    }
+  }, [navigate, postId]);
   // 記事一覧画面に戻る関数
   const handleBackClick = useCallback(() => {
     navigate("/");
@@ -41,9 +60,6 @@ function PostDetailPage() {
       setLoading(true);
       // エラーメッセージ初期化
       setErrorMsg("");
-
-      // URLパラメータSID
-      const postId = Number(urlParams.id);
 
       // 記事詳細データを取得
       const postData = await getPostDetailApi(postId);
@@ -64,7 +80,7 @@ function PostDetailPage() {
       // ローディング終了
       setLoading(false);
     })();
-  }, [urlParams.id]);
+  }, [postId]);
 
   const commentList = comments.map((comment) => {
     return (
@@ -95,6 +111,11 @@ function PostDetailPage() {
           <h3>コメント一覧</h3>
           <div className={styles.commentBox}>
             <ul>{commentList}</ul>
+          </div>
+
+          {/* 削除ボタン */}
+          <div>
+            <button onClick={handleDeleteClick}>削除</button>
           </div>
 
           {/* 記事一覧ページに戻るボタン */}

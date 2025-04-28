@@ -52,7 +52,7 @@ function NewPostPage() {
 
   return (
     <div>
-      <h2>新しい記事を作成</h2>
+      <h2>記事を作成</h2>
       {/* フォームエリア */}
       <form onSubmit={handleSubmit}>
         <div>

@@ -1,7 +1,10 @@
 declare const styles: {
-  readonly "container": string;
-  readonly "list": string;
-  readonly "title": string;
+  readonly title: string;
+  readonly createButtonArea: string;
+  readonly createButton: string;
+  readonly list: string;
+  readonly listItem: string;
+  readonly errorMessage: string;
+  readonly loadingMessage: string;
 };
 export = styles;
-
