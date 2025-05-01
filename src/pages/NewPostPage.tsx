@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postPostApi } from "../ApiAdapter/PostPost";
+import { motion } from "framer-motion";
+import styles from "./NewPostPage.module.css";
 
 /**
  * NewPostPageコンポーネント
@@ -21,6 +23,7 @@ function NewPostPage() {
   const titleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   }, []);
+
   // 本文の入力変更時の関数
   const contentChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -28,6 +31,11 @@ function NewPostPage() {
     },
     []
   );
+
+  // 記事一覧画面に戻る関数
+  const handleBackClick = useCallback(() => {
+    navigate("/");
+  }, [navigate]);
 
   /**
    * フォーム送信時の処理
@@ -51,21 +59,56 @@ function NewPostPage() {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* ページタイトルエリア */}
       <h2>記事を作成</h2>
       {/* フォームエリア */}
-      <form onSubmit={handleSubmit}>
-        <div>
+      <form onSubmit={handleSubmit} className={styles.formContainer}>
+        {/* 記事タイトル */}
+        <div className={styles.formItem}>
           <label>タイトル：</label>
-          <input type="text" value={title} onChange={titleChange} />
+          <input
+            className={styles.input}
+            type="text"
+            value={title}
+            onChange={titleChange}
+          />
         </div>
-        <div>
+
+        {/* 記事本文 */}
+        <div className={styles.formItem}>
           <label>本文：</label>
-          <textarea value={content} onChange={contentChange} />
+          <textarea
+            className={styles.textarea}
+            value={content}
+            onChange={contentChange}
+          />
         </div>
-        <button type="submit">投稿</button>
+
+        {/* 投稿ボタン */}
+        <div>
+          <button className={styles.submitButton} type="submit">
+            投稿
+          </button>
+        </div>
+
+        {/* 記事一覧ページに戻るボタン */}
+        <div>
+          <button
+            onClick={handleBackClick}
+            className={styles.backButton}
+            type="button"
+          >
+            一覧に戻る
+          </button>
+        </div>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

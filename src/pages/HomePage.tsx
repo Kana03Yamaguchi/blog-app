@@ -7,6 +7,7 @@ import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
 import PostList from "../components/PostList";
 import { motion } from "framer-motion";
+import Skeleton from "react-loading-skeleton";
 
 /**
  * HomePageコンポーネント
@@ -91,7 +92,7 @@ function HomePage() {
 
       {/* ローディング中表示 */}
       {isLoading ? (
-        <p className={styles.loadingMessage}>ローディング中...</p>
+        <Skeleton count={5} height={40} />
       ) : (
         <>
           {/* 記事作成ボタン */}

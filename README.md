@@ -1,54 +1,48 @@
-# React + TypeScript + Vite
+# ブログアプリ
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 概要
 
-Currently, two official plugins are available:
+- シンプルなブログ投稿・閲覧アプリ
+- 記事の新規投稿・編集・削除・詳細閲覧が可能
+- フェードインやホバー時のアニメーション付きで、使いやすく柔らかい UI を実現
+- ページネーションやローディングスケルトンで快適な一覧表示を提供
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 機能一覧
 
-## Expanding the ESLint configuration
+- 記事一覧の取得（API 経由）
+- 記事の新規投稿（タイトル・本文の入力、バリデーションあり）
+- 記事の詳細表示（コメント一覧付き）
+- 記事の編集（タイトル・本文の更新）
+- 記事の削除（確認ダイアログあり）
+- 一覧画面への戻るボタン
+- ページネーション（5 件ずつ表示）
+- ホバーアニメーション（ボタン・リンク）
+- ローディング表示（react-loading-skeleton）
+- アニメーション付きの画面遷移（Framer Motion）
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 技術スタック
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- TypeScript
+- React
+- React Router
+- Framer Motion
+- react-loading-skeleton
+- CSS Modules
+- Vite
+
+## 使い方
+
+```bash
+git clone https://github.com/Kana03Yamaguchi/blog-app.git
+cd blog-app
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 今後の改善案
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- コメント投稿機能の追加
+- 記事の検索・タグ機能
+- 認証（ログイン／ログアウト）機能
+- 投稿順の並び替え
+- 管理画面の追加

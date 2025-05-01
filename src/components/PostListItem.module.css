@@ -1,3 +1,8 @@
+/* 各リスト */
+.listItem {
+  list-style: none;
+}
+
 /* 記事リンク */
 .link {
   display: block;
@@ -18,4 +23,6 @@
 .link:hover {
   background-color: #f0f8ff;
   text-decoration: underline;
+  transform: scale(1.02);
+  transition: background-color 0.2s, transform 0.2s;
 }

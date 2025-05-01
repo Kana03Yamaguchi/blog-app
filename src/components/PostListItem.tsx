@@ -16,7 +16,7 @@ interface PostListItemProps {
 function PostListItem(props: PostListItemProps) {
   // 対象の記事詳細ページに遷移
   return (
-    <li>
+    <li className={styles.listItem}>
       <Link className={styles.link} to={"/posts/" + props.post.id}>
         {props.post.title}
       </Link>

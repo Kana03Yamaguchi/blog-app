@@ -1,5 +1,5 @@
 declare const styles: {
-  readonly "link": string;
+  readonly listItem: string;
+  readonly link: string;
 };
 export = styles;
-

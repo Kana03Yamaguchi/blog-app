@@ -6,6 +6,7 @@ import styles from "./PostDetailPage.module.css";
 import { CommentType } from "../Types/CommentType";
 import { getCommentListApi } from "../ApiAdapter/GetCommentList";
 import { deletePostApi } from "../ApiAdapter/DeletePost";
+import { motion } from "framer-motion";
 
 /**
  * PostDetailPageコンポーネント
@@ -30,6 +31,11 @@ function PostDetailPage() {
   /**
    * メモ化
    */
+  // 記事を編集画面へ遷移する関数
+  const handleEditClick = useCallback(() => {
+    navigate("/posts/" + postId + "/edit");
+  }, [navigate, postId]);
+
   // 記事を削除してに記事一覧画面に戻る関数
   const handleDeleteClick = useCallback(async () => {
     const result = window.confirm("この記事を本当に削除してもよいですか？");
@@ -46,6 +52,7 @@ function PostDetailPage() {
       }
     }
   }, [navigate, postId]);
+
   // 記事一覧画面に戻る関数
   const handleBackClick = useCallback(() => {
     navigate("/");
@@ -91,9 +98,15 @@ function PostDetailPage() {
   });
 
   return (
-    <div className={styles.postBox}>
+    <motion.div
+      className={styles.postBox}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {/* ページタイトルエリア */}
-      <h2 className={styles.title}>{postDetail?.title ?? "記事詳細ページ"}</h2>
+      <h2 className={styles.title}>{postDetail?.title ?? "記事詳細"}</h2>
 
       {/* エラー表示エリア */}
       {errorMsg && <p>{errorMsg}</p>}
@@ -107,24 +120,46 @@ function PostDetailPage() {
           <p className={styles.body}>
             {postDetail?.content ?? "選択された記事の内容が表示"}
           </p>
+
           {/* コメント一覧エリア */}
           <h3>コメント一覧</h3>
           <div className={styles.commentBox}>
             <ul>{commentList}</ul>
           </div>
 
-          {/* 削除ボタン */}
+          {/* 記事一覧ページに戻るボタン */}
           <div>
-            <button onClick={handleDeleteClick}>削除</button>
+            <button
+              onClick={handleBackClick}
+              className={styles.backButton}
+              type="button"
+            >
+              一覧に戻る
+            </button>
           </div>
 
-          {/* 記事一覧ページに戻るボタン */}
-          <div className={styles.backButton}>
-            <button onClick={handleBackClick}>一覧に戻る</button>
+          {/* 記事編集ボタン */}
+          <div>
+            <button
+              className={styles.editbutton}
+              onClick={handleEditClick}
+              type="button"
+            >
+              編集
+            </button>
+
+            {/* 記事削除ボタン */}
+            <button
+              className={styles.deletebutton}
+              onClick={handleDeleteClick}
+              type="button"
+            >
+              削除
+            </button>
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 }
 

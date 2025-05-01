@@ -36,8 +36,51 @@
   line-height: 1.6;
 }
 
-/* 戻るボタン */
+/* 一覧に戻るボタン */
 .backButton {
-  margin-top: 32px;
-  text-align: center;
+  margin-top: 16px;
+  background-color: #e0e0e0;
+  color: #333;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.backButton:hover {
+  background-color: #ccc;
+  transform: scale(1.03);
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+/* 編集ボタン */
+.editbutton {
+  margin-top: 20px;
+  background-color: #1976d2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.editbutton:hover {
+  background-color: #1565c0;
+  transform: scale(1.05);
+}
+
+/* 削除ボタン */
+.deletebutton {
+  margin-top: 20px;
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s ease;
+}
+
+.deletebutton:hover {
+  background-color: #e53935;
+  transform: scale(1.05);
 }
