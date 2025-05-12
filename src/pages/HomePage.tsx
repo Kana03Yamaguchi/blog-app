@@ -1,13 +1,17 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { PostType } from "../Types/PostType";
 import { getPostsListApi } from "../ApiAdapter/GetPostList";
 import styles from "./HomePage.module.css";
 import appStyles from "../App.module.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
-import PostList from "../components/PostList";
+// import PostList from "../components/PostList";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
+import React from "react";
+
+// PostList を遅延読み込み
+const PostList = React.lazy(() => import("../components/PostList"));
 
 /**
  * HomePageコンポーネント
@@ -103,7 +107,10 @@ function HomePage() {
           </div>
 
           {/* 記事一覧エリア */}
-          <PostList posts={pagePosts} />
+          {/* PostListをSuspenseでラップして遅延読み込み */}
+          <Suspense fallback={<div>Loading...</div>}>
+            <PostList posts={pagePosts} />
+          </Suspense>
 
           {/* ページネーション */}
           <Pagination
