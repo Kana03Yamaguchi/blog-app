@@ -1,32 +1,69 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { PostType } from "../Types/PostType";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback } from "react";
 import { getPostDetailApi } from "../ApiAdapter/GetPostDetail";
 import styles from "./PostDetailPage.module.css";
-import { CommentType } from "../Types/CommentType";
-import { getCommentListApi } from "../ApiAdapter/GetCommentList";
 import { deletePostApi } from "../ApiAdapter/DeletePost";
 import { motion } from "framer-motion";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { getCommentListApi } from "../ApiAdapter/GetCommentList";
 
 /**
  * PostDetailPageコンポーネント
  * - 記事詳細ページ
  */
 function PostDetailPage() {
-  // ローディング状態を管理
-  const [loading, setLoading] = useState<boolean>(true);
-  // エラーメッセージを管理
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  // 記事詳細を管理
-  const [postDetail, setPostDetail] = useState<PostType>();
-  // コメント一覧データを管理
-  const [comments, setComments] = useState<CommentType[]>([]);
   // URLパラメータを取得
   const urlParams = useParams<{ id: string }>();
   // URLパラメータID
   const postId = Number(urlParams.id);
   // 記事一覧遷移用の関数を取得
   const navigate = useNavigate();
+  // クライアントのインスタンスを取得
+  const queryClient = useQueryClient();
+
+  /**
+   * 初期表示処理
+   */
+  // 記事詳細データを取得（キャッシュキーにIDを含める）
+  const {
+    data: postDetail,
+    isLoading: isPostLoading,
+    error: postError,
+  } = useQuery({
+    queryKey: ["post", postId],
+    queryFn: () => getPostDetailApi(postId),
+    // 1分間はキャッシュ有効
+    staleTime: 1000 * 60,
+  });
+  // コメント一覧を取得（IDに紐づけ）
+  const {
+    data: comments = [],
+    isLoading: isCommentLoading,
+    error: commentError,
+  } = useQuery({
+    queryKey: ["comments", postId],
+    queryFn: () => getCommentListApi(postId),
+    // 1分間はキャッシュ有効
+    staleTime: 1000 * 60,
+  });
+
+  // 記事削除処理：mutationを定義
+  const deleteMutation = useMutation({
+    // 実行するAPI処理を定義（mutationFnに渡す）
+    mutationFn: (id: number) => deletePostApi(id),
+
+    // 削除成功時の処理
+    onSuccess: () => {
+      // 記事一覧のキャッシュを無効化して再取得
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // 記事一覧ページに遷移
+      navigate("/");
+    },
+    // 削除失敗時の処理
+    onError: () => {
+      alert("記事の削除に失敗しました");
+    },
+  });
 
   /**
    * メモ化
@@ -41,54 +78,17 @@ function PostDetailPage() {
     const result = window.confirm("この記事を本当に削除してもよいですか？");
 
     if (result) {
-      // 記事削除APIを呼び出し
-      const success = await deletePostApi(postId);
-      if (success) {
-        // 成功：記事一覧ページ（トップ）へ遷移
-        navigate("/");
-      } else {
-        // 失敗：アラート表示
-        alert("記事の削除に失敗しました");
-      }
+      // 記事削除処理を実行
+      deleteMutation.mutate(postId);
     }
-  }, [navigate, postId]);
+  }, [deleteMutation, postId]);
 
   // 記事一覧画面に戻る関数
   const handleBackClick = useCallback(() => {
     navigate("/");
   }, [navigate]);
 
-  /**
-   * 初期表示処理
-   */
-  useEffect(() => {
-    (async () => {
-      // ローディング開始
-      setLoading(true);
-      // エラーメッセージ初期化
-      setErrorMsg("");
-
-      // 記事詳細データを取得
-      const postData = await getPostDetailApi(postId);
-      if (!postData) {
-        setErrorMsg("記事詳細が存在しません");
-        return;
-      }
-      setPostDetail(postData);
-
-      // コメント一覧データを取得
-      const commentData = await getCommentListApi(postId);
-      if (commentData.length === 0) {
-        setErrorMsg("コメントが存在しません");
-        return;
-      }
-      setComments(commentData);
-
-      // ローディング終了
-      setLoading(false);
-    })();
-  }, [postId]);
-
+  // コメント一覧を表示するためのリストを作成
   const commentList = comments.map((comment) => {
     return (
       <li key={comment.id}>
@@ -109,11 +109,12 @@ function PostDetailPage() {
       <h2 className={styles.title}>{postDetail?.title ?? "記事詳細"}</h2>
 
       {/* エラー表示エリア */}
-      {errorMsg && <p>{errorMsg}</p>}
+      {postError && <p>記事が取得できませんでした</p>}
+      {commentError && <p>コメントの取得に失敗しました</p>}
 
       {/* ローディング中表示 */}
-      {loading ? (
-        <p>ローディング中...</p>
+      {isPostLoading || isCommentLoading ? (
+        <p>Loading...</p>
       ) : (
         <>
           {/* 記事内容エリア */}

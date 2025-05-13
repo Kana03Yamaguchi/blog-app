@@ -1,9 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage";
-import PostDetailPage from "./pages/PostDetailPage";
 import styles from "./App.module.css";
-import NewPostPage from "./pages/NewPostPage";
-import EditPostPage from "./pages/EditPostPage";
+import React, { Suspense } from "react";
+
+// 遅延読み込み
+const PostDetailPage = React.lazy(() => import("./pages/PostDetailPage"));
+const NewPostPage = React.lazy(() => import("./pages/NewPostPage"));
+const EditPostPage = React.lazy(() => import("./pages/EditPostPage"));
 
 /**
  * Appコンポーネント
@@ -19,12 +22,14 @@ function App() {
 
       {/* メインコンテンツエリア：ページごとの表示切り替え */}
       <main className={styles.main}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/posts/:id" element={<PostDetailPage />} />
-          <Route path="/posts/new" element={<NewPostPage />} />
-          <Route path="/posts/:id/edit" element={<EditPostPage />} />
-        </Routes>
+        <Suspense fallback={<p>Loading...</p>}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/posts/:id" element={<PostDetailPage />} />
+            <Route path="/posts/new" element={<NewPostPage />} />
+            <Route path="/posts/:id/edit" element={<EditPostPage />} />
+          </Routes>
+        </Suspense>
       </main>
 
       {/* フッターエリア */}

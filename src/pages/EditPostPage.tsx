@@ -5,6 +5,7 @@ import { PostType } from "../Types/PostType";
 import { putPostApi } from "../ApiAdapter/PutPost";
 import { motion } from "framer-motion";
 import styles from "./EditPostPage.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**
  * EditPostPageコンポーネント
@@ -27,6 +28,30 @@ function EditPostPage() {
   const urlParams = useParams<{ id: string }>();
   // URLパラメータID
   const postId = Number(urlParams.id);
+
+  // クライアントのインスタンスを取得
+  const queryClient = useQueryClient();
+
+  /**
+   * 記事編集処理：mutation定義（投稿処理と成功時・失敗時の処理をまとめる）
+   */
+  const editMutation = useMutation({
+    // 実行するAPI処理を定義（mutationFnに渡す）
+    mutationFn: (data: { id: number; title: string; content: string }) =>
+      putPostApi(data.id, data.title, data.content),
+
+    // 投稿成功時の処理
+    onSuccess: () => {
+      // 記事一覧のキャッシュを無効化して再取得
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // 記事一覧ページに遷移
+      navigate("/");
+    },
+    // 投稿失敗時の処理
+    onError: () => {
+      alert("記事の更新に失敗しました");
+    },
+  });
 
   /**
    * メモ化
@@ -51,23 +76,13 @@ function EditPostPage() {
 
   /**
    * フォーム送信時の処理
-   * - 成功：トップページへ戻る
-   * - 失敗：アラート表示
    */
   const handleSubmit = async (e: React.FormEvent) => {
     // デフォルトのフォーム送信（ページリロード）を防止
     e.preventDefault();
 
-    // 記事編集APIを呼び出し
-    const success = await putPostApi(postId, title, content);
-
-    if (success) {
-      // 成功：記事一覧ページ（トップ）へ遷移
-      navigate("/");
-    } else {
-      // 失敗：アラート表示
-      alert("記事の作成に失敗しました");
-    }
+    // 記事編集処理を実行
+    editMutation.mutate({ id: postId, title, content });
   };
 
   /**

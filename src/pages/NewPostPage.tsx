@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { postPostApi } from "../ApiAdapter/PostPost";
 import { motion } from "framer-motion";
 import styles from "./NewPostPage.module.css";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**
  * NewPostPageコンポーネント
@@ -15,6 +16,29 @@ function NewPostPage() {
   const [content, setContent] = useState("");
   // ページ遷移用のフック
   const navigate = useNavigate();
+  // クライアントのインスタンスを取得
+  const queryClient = useQueryClient();
+
+  /**
+   * 記事作成処理：mutation定義（投稿処理と成功時・失敗時の処理をまとめる）
+   */
+  const postMutation = useMutation({
+    // 実行するAPI処理を定義（mutationFnに渡す）
+    mutationFn: (data: { title: string; content: string }) =>
+      postPostApi(data.title, data.content),
+
+    // 投稿成功時の処理
+    onSuccess: () => {
+      // 記事一覧のキャッシュを無効化して再取得
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      // 記事一覧ページに遷移
+      navigate("/");
+    },
+    // 投稿失敗時の処理
+    onError: () => {
+      alert("記事の作成に失敗しました");
+    },
+  });
 
   /**
    * メモ化
@@ -39,23 +63,12 @@ function NewPostPage() {
 
   /**
    * フォーム送信時の処理
-   * - 成功：トップページへ戻る
-   * - 失敗：アラート表示
    */
   const handleSubmit = async (e: React.FormEvent) => {
     // デフォルトのフォーム送信（ページリロード）を防止
     e.preventDefault();
-
-    // 記事作成APIを呼び出し
-    const success = await postPostApi(title, content);
-
-    if (success) {
-      // 成功：記事一覧ページ（トップ）へ遷移
-      navigate("/");
-    } else {
-      // 失敗：アラート表示
-      alert("記事の作成に失敗しました");
-    }
+    // 記事作成処理を実行
+    postMutation.mutate({ title, content });
   };
 
   return (

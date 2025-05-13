@@ -1,16 +1,15 @@
 import { Suspense, useEffect, useState } from "react";
-import { PostType } from "../Types/PostType";
 import { getPostsListApi } from "../ApiAdapter/GetPostList";
 import styles from "./HomePage.module.css";
 import appStyles from "../App.module.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";
-// import PostList from "../components/PostList";
 import { motion } from "framer-motion";
 import Skeleton from "react-loading-skeleton";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
 
-// PostList を遅延読み込み
+// 遅延読み込み
 const PostList = React.lazy(() => import("../components/PostList"));
 
 /**
@@ -18,16 +17,23 @@ const PostList = React.lazy(() => import("../components/PostList"));
  * -トップページ
  */
 function HomePage() {
-  // ローディング状態を管理
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  // エラーメッセージを管理
-  const [errorMsg, setErrorMsg] = useState<string>("");
-  // 記事一覧データを管理
-  const [posts, setPosts] = useState<PostType[]>([]);
   // ページ番号を管理
   const [currentPage, setCurrentPage] = useState<number>(1);
   // 1ページあたりの表示件数
   const postsPerPage = 5;
+
+  /**
+   * 初期表示処理
+   */
+  // 記事一覧を取得（キャッシュ・ローディング・エラー状態も含む）
+  const {
+    data: posts = [],
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["posts"],
+    queryFn: getPostsListApi,
+  });
 
   /**
    * ページごとの記事データを算出
@@ -43,37 +49,6 @@ function HomePage() {
   // 表示する記事一覧を切り出す
   // 例：posts[0]〜posts[4] を抽出
   const pagePosts = posts.slice(startIndex, endIndex);
-
-  /**
-   * 記事一覧データ取得処理
-   */
-  const getPosts = async () => {
-    // ローディング開始
-    setIsLoading(true);
-    // エラーメッセージ初期化
-    setErrorMsg("");
-
-    // 記事一覧データを取得
-    const data = await getPostsListApi();
-
-    if (data.length === 0) {
-      setErrorMsg("記事が存在しません");
-      // ローディング終了
-      setIsLoading(false);
-      return;
-    }
-
-    setPosts(data);
-    // ローディング終了
-    setIsLoading(false);
-  };
-
-  /**
-   * 初期表示処理
-   */
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   // ページ切り替え時にスクロールをトップへ移動
   useEffect(() => {
@@ -92,7 +67,7 @@ function HomePage() {
       <h2 className={styles.title}>記事一覧</h2>
 
       {/* エラー表示エリア */}
-      {errorMsg && <p className={styles.errorMessage}>{errorMsg}</p>}
+      {error && <p className={styles.errorMessage}>エラーが発生しました</p>}
 
       {/* ローディング中表示 */}
       {isLoading ? (
