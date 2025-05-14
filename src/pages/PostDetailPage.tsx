@@ -6,6 +6,7 @@ import { deletePostApi } from "../ApiAdapter/DeletePost";
 import { motion } from "framer-motion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCommentListApi } from "../ApiAdapter/GetCommentList";
+import Skeleton from "react-loading-skeleton";
 
 /**
  * PostDetailPageコンポーネント
@@ -114,7 +115,19 @@ function PostDetailPage() {
 
       {/* ローディング中表示 */}
       {isPostLoading || isCommentLoading ? (
-        <p>Loading...</p>
+        <>
+          {/* タイトルスケルトン */}
+          <Skeleton height={32} style={{ marginBottom: "16px" }} />
+
+          {/* 本文スケルトン（3行分） */}
+          <Skeleton count={3} height={20} style={{ marginBottom: "8px" }} />
+
+          {/* コメント一覧の見出し */}
+          <Skeleton width={120} height={24} style={{ margin: "24px 0 8px" }} />
+
+          {/* コメント（2件分の例） */}
+          <Skeleton count={2} height={20} style={{ marginBottom: "6px" }} />
+        </>
       ) : (
         <>
           {/* 記事内容エリア */}
