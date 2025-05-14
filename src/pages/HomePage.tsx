@@ -20,7 +20,7 @@ function HomePage() {
   // ページ番号を管理
   const [currentPage, setCurrentPage] = useState<number>(1);
   // 1ページあたりの表示件数
-  const postsPerPage = 5;
+  const postsPerPage = 10;
 
   /**
    * 初期表示処理
