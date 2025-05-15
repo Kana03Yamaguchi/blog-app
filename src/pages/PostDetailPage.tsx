@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useCallback } from "react";
 import { getPostDetailApi } from "../ApiAdapter/GetPostDetail";
-import styles from "./PostDetailPage.module.css";
+import styles from "../styles/PostDetailPage.module.css";
 import { deletePostApi } from "../ApiAdapter/DeletePost";
 import { motion } from "framer-motion";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";

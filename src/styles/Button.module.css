@@ -1,0 +1,50 @@
+/* 共通：ベースボタン */
+.button {
+  padding: 10px 16px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.2s;
+  font-weight: bold;
+}
+
+/* 投稿ボタン */
+.primary {
+  background-color: #4caf50;
+  color: white;
+}
+
+.primary:hover {
+  background-color: #45a049;
+}
+
+/* 一覧に戻るボタン */
+.secondary {
+  background-color: #ddd;
+  color: #333;
+}
+
+.secondary:hover {
+  background-color: #ccc;
+}
+
+/* 編集ボタン */
+.edit {
+  background-color: #2196f3;
+  color: white;
+}
+
+.edit:hover {
+  background-color: #1976d2;
+}
+
+/* 削除ボタン */
+.danger {
+  background-color: #e53935;
+  color: white;
+}
+
+.danger:hover {
+  background-color: #d32f2f;
+}

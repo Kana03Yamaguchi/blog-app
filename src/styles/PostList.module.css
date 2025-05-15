@@ -1,0 +1,6 @@
+/* リスト全体のスタイル */
+.postList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}

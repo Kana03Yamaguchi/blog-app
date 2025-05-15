@@ -1,6 +1,7 @@
 /* 各リスト */
 .listItem {
   list-style: none;
+  margin-bottom: 16px;
 }
 
 /* 記事リンク */

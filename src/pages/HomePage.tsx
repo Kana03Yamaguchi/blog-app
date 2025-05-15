@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { getPostsListApi } from "../ApiAdapter/GetPostList";
-import styles from "./HomePage.module.css";
+import styles from "../styles/HomePage.module.css";
 import appStyles from "../App.module.css";
 import Pagination from "../components/Pagination";
 import { Link } from "react-router-dom";

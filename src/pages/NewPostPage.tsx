@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postPostApi } from "../ApiAdapter/PostPost";
 import { motion } from "framer-motion";
-import styles from "./NewPostPage.module.css";
+import styles from "../styles/NewPostPage.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**

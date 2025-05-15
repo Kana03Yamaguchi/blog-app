@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { PostType } from "../Types/PostType";
-import styles from "./PostListItem.module.css";
+import styles from "../styles/PostListItem.module.css";
 
 /**
  * props定義

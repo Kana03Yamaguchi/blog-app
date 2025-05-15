@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PostType } from "../Types/PostType";
 import PostListItem from "./PostListItem";
+import styles from "../styles/PostList.module.css";
 
 /**
  * props定義
@@ -43,7 +44,12 @@ function PostList(props: PostListProps) {
   });
 
   return (
-    <motion.ul variants={containerVariants} initial="hidden" animate="visible">
+    <motion.ul
+      className={styles.postList}
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       {postListItems}
     </motion.ul>
   );

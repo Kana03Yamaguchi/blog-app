@@ -4,7 +4,7 @@ import { getPostDetailApi } from "../ApiAdapter/GetPostDetail";
 import { PostType } from "../Types/PostType";
 import { putPostApi } from "../ApiAdapter/PutPost";
 import { motion } from "framer-motion";
-import styles from "./EditPostPage.module.css";
+import styles from "../styles/EditPostPage.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 /**
